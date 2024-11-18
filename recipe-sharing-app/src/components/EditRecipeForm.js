@@ -1,29 +1,21 @@
-import React, { useState } from 'react';
-import { useRecipeStore } from '../../store/recipeStore';
+import { useRecipeStore } from '../recipeStore';
 
 const EditRecipeForm = ({ recipe }) => {
-  const [title, setTitle] = useState(recipe.title);
-  const [description, setDescription] = useState(recipe.description);
-  const updateRecipe = useRecipeStore((state) => state.updateRecipe);
+  const { updateRecipe } = useRecipeStore();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateRecipe(recipe.id, { title, description });
+    const updatedRecipe = {
+      title: e.target.title.value,
+      description: e.target.description.value,
+    };
+    updateRecipe(recipe.id, updatedRecipe);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Title"
-      />
-      <textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Description"
-      />
+      <input name="title" defaultValue={recipe.title} />
+      <textarea name="description" defaultValue={recipe.description} />
       <button type="submit">Save Changes</button>
     </form>
   );
