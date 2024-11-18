@@ -1,3 +1,5 @@
+import RecipeDetails from './components/Recipe/RecipeDetails';
+
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import RecipeDetails from './RecipeDetails';
 import { useRecipeStore } from './recipeStore';
