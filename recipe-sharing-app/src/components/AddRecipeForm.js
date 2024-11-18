@@ -31,3 +31,10 @@
       </form>
     );
   };
+
+  const EditRecipeForm = ({ recipe }) => {
+    // Component code...
+  };
+  
+  export default EditRecipeForm;
+  
