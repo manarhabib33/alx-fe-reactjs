@@ -1,11 +1,13 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useRecipeStore } from '../../store/recipeStore';
 import EditRecipeForm from './EditRecipeForm';
 import DeleteRecipeButton from './DeleteRecipeButton';
 
-const RecipeDetails = ({ recipeId }) => {
+const RecipeDetails = () => {
+  const { id } = useParams();
   const recipe = useRecipeStore((state) =>
-    state.recipes.find((recipe) => recipe.id === recipeId)
+    state.recipes.find((recipe) => recipe.id === parseInt(id))
   );
 
   if (!recipe) {
@@ -23,4 +25,3 @@ const RecipeDetails = ({ recipeId }) => {
 };
 
 export default RecipeDetails;
-
