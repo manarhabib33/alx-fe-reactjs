@@ -1,4 +1,4 @@
-import { useRecipeStore } from './RecipeStore';
+import { useRecipeStore } from './components/recipeStore';
 
 const EditRecipeForm = ({ recipe }) => {
   const { updateRecipe } = useRecipeStore();

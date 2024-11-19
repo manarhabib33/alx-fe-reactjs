@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import RecipeDetails from './components/RecipeDetails';
+import RecipeDetails from './RecipeDetails';
 
-function App() {
+const App = () => {
   return (
     <Router>
       <Routes>
@@ -9,6 +9,6 @@ function App() {
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;
