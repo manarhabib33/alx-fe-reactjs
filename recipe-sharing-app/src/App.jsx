@@ -1,18 +1,25 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import RecipeList from './components/RecipeList';
-import RecipeDetails from './components/RecipeDetails';
-import AddRecipeForm from './components/AddRecipeForm'; // Import AddRecipeForm
+import SearchBar from './components/SearchBar';
 import FavoritesList from './components/FavoritesList';
 import RecommendationsList from './components/RecommendationsList';
+import AddRecipeForm from './components/AddRecipeForm'; // Assuming this component exists
+
 const App = () => {
   return (
-    <div>
-      <h1>Recipe Sharing App</h1>
-      <RecipeList />
-      <FavoritesList />
-      <RecommendationsList />
-    </div>
+    <Router>
+      <div>
+        <h1>Recipe Sharing Application</h1>
+        <SearchBar />
+        <Switch>
+          <Route path="/" exact component={RecipeList} />
+          <Route path="/favorites" component={FavoritesList} />
+          <Route path="/recommendations" component={RecommendationsList} />
+          <Route path="/add-recipe" component={AddRecipeForm} />
+        </Switch>
+      </div>
+    </Router>
   );
 };
 

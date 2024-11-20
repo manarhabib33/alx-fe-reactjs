@@ -1,31 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link for navigation
-import { useRecipeStore } from '../recipeStore'; // Adjust the import path to match your file structure
-
-
+import React, { useEffect } from 'react';
+import { useRecipeStore } from './recipeStore';
+import { Link } from 'react-router-dom'; 
 
 const RecipeList = () => {
-  const { recipes, addFavorite, removeFavorite, favorites } = useRecipeStore(state => ({
-    recipes: state.recipes,
-    addFavorite: state.addFavorite,
-    removeFavorite: state.removeFavorite,
-    favorites: state.favorites,
-  }));
+  const recipes = useRecipeStore(state => state.filteredRecipes);
+  const filterRecipes = useRecipeStore(state => state.filterRecipes);
+
+  useEffect(() => {
+    filterRecipes();
+  }, [filterRecipes]);
 
   return (
     <div>
-      <h2>All Recipes</h2>
-      {recipes.map(recipe => (
-        <div key={recipe.id}>
-          <h3>{recipe.title}</h3>
-          <p>{recipe.description}</p>
-          {favorites.includes(recipe.id) ? (
-            <button onClick={() => removeFavorite(recipe.id)}>Remove from Favorites</button>
-          ) : (
-            <button onClick={() => addFavorite(recipe.id)}>Add to Favorites</button>
-          )}
-        </div>
-      ))}
+      <h2>Recipes List</h2>
+      {recipes.length === 0 ? (
+        <p>No recipes found!</p>
+      ) : (
+        recipes.map(recipe => (
+          <div key={recipe.id}>
+            <h3>{recipe.title}</h3>
+            <p>{recipe.description}</p>
+            <Link to={`/recipe/${recipe.id}`}>View Recipe</Link>
+          </div>
+        ))
+      )}
     </div>
   );
 };
