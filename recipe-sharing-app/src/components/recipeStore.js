@@ -6,6 +6,7 @@ export const useRecipeStore = create((set) => ({
   ],
   searchTerm: '',
   filteredRecipes: [],
+  setRecipes: (newRecipes) => set({ recipes: newRecipes }),
 
   // Update the search term
   setSearchTerm: (term) => set((state) => {
@@ -16,6 +17,7 @@ export const useRecipeStore = create((set) => ({
     return { searchTerm: term, filteredRecipes: filtered };
   }),
 }));
+
 
 const useRecipeStore = create(set => ({
   ...existingStoreLogic, // Retain existing logic
