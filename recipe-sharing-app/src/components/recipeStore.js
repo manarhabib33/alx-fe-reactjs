@@ -39,9 +39,20 @@ const useRecipeStore = create(set => ({
     return { recommendations: recommended };
   }),
 
-  // Adding the required "addRecipe" action
   addRecipe: (recipe) => set(state => ({
     recipes: [...state.recipes, recipe],
+  })),
+
+  // Adding the required "updateRecipe" action
+  updateRecipe: (recipeId, updatedRecipe) => set(state => ({
+    recipes: state.recipes.map(recipe =>
+      recipe.id === recipeId ? { ...recipe, ...updatedRecipe } : recipe
+    ),
+  })),
+
+  // Adding the required "deleteRecipe" action
+  deleteRecipe: (recipeId) => set(state => ({
+    recipes: state.recipes.filter(recipe => recipe.id !== recipeId),
   })),
 }));
 
