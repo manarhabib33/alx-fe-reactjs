@@ -4,6 +4,7 @@ import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
 import FavoritesList from './components/FavoritesList';
 import RecommendationsList from './components/RecommendationsList';
+import RecipeDetail from './components/RecipeDetail'; // Importing RecipeDetail Component
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/add-recipe" element={<AddRecipeForm />} />
           <Route path="/favorites" element={<FavoritesList />} />
           <Route path="/recommendations" element={<RecommendationsList />} />
+          <Route path="/recipe/:id" element={<RecipeDetail />} /> {/* Added RecipeDetail Route */}
         </Routes>
       </div>
     </Router>
