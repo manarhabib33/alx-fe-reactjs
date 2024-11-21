@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 
 const RegistrationForm = () => {
-  const [formData, setFormData] = useState({ username: "", email: "", password: "" });
+  // Use separate state variables for each input field
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
 
   const validate = () => {
     let tempErrors = {};
-    if (!formData.username) tempErrors.username = "Username is required.";
-    if (!formData.email) tempErrors.email = "Email is required.";
-    if (!formData.password) tempErrors.password = "Password is required.";
+    if (!username) tempErrors.username = "Username is required.";
+    if (!email) tempErrors.email = "Email is required.";
+    if (!password) tempErrors.password = "Password is required.";
     return tempErrors;
   };
 
@@ -22,7 +20,7 @@ const RegistrationForm = () => {
     const tempErrors = validate();
     setErrors(tempErrors);
     if (Object.keys(tempErrors).length === 0) {
-      console.log("Form Submitted:", formData);
+      console.log("Form Submitted:", { username, email, password });
     }
   };
 
@@ -33,8 +31,8 @@ const RegistrationForm = () => {
         <input
           type="text"
           name="username"
-          value={formData.username}
-          onChange={handleChange}
+          value={username} // Use individual state variable
+          onChange={(e) => setUsername(e.target.value)} // Update specific state
         />
         {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
       </div>
@@ -43,8 +41,8 @@ const RegistrationForm = () => {
         <input
           type="email"
           name="email"
-          value={formData.email}
-          onChange={handleChange}
+          value={email} // Use individual state variable
+          onChange={(e) => setEmail(e.target.value)} // Update specific state
         />
         {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
       </div>
@@ -53,8 +51,8 @@ const RegistrationForm = () => {
         <input
           type="password"
           name="password"
-          value={formData.password}
-          onChange={handleChange}
+          value={password} // Use individual state variable
+          onChange={(e) => setPassword(e.target.value)} // Update specific state
         />
         {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
       </div>
