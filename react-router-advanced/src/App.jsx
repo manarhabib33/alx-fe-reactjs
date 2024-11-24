@@ -1,26 +1,27 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
 import Home from "./components/Home";
 import Profile from "./components/Profile";
-import BlogPost from "./components/BlogPost"; // Import for dynamic routing
+import Login from "./components/Login";
 
 const App = () => {
   return (
     <Router>
-      <div>
-        <h1>Welcome to the Advanced React Router Application</h1>
-        <Routes>
-          {/* Existing Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/profile/*" element={<Profile />} />
-
-          {/* Dynamic Route for Blog Posts */}
-          <Route path="/blog/:id" element={<BlogPost />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </Router>
   );
 };
 
 export default App;
-
