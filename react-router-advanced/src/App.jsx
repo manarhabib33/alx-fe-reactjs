@@ -1,9 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Login from "./components/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+import BlogPost from "./components/BlogPost"; // Adding for dynamic routing
 
 const App = () => {
   return (
@@ -19,6 +20,8 @@ const App = () => {
           }
         />
         <Route path="/login" element={<Login />} />
+        {/* Adding dynamic route */}
+        <Route path="/blog/:id" element={<BlogPost />} />
       </Routes>
     </Router>
   );
