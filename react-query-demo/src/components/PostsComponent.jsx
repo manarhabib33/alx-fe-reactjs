@@ -12,6 +12,7 @@ const PostsComponent = () => {
   const {
     data,
     isError,
+    error, // Added this to destructure the error object
     isLoading,
     isFetching,
     refetch,
@@ -23,7 +24,7 @@ const PostsComponent = () => {
   });
 
   if (isLoading) return <p>Loading posts...</p>;
-  if (isError) return <p>Error fetching posts. Please try again later.</p>;
+  if (isError) return <p>Error: {error.message || "Something went wrong while fetching posts."}</p>;
 
   return (
     <div>
