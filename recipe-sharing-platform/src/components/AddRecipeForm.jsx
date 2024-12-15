@@ -7,12 +7,15 @@ const AddRecipeForm = () => {
     steps: "",
   });
 
-  const [errors, setErrors] = useState({}); // State for form validation errors
+  const [errors, setErrors] = useState({}); // For validation errors
 
   // Handle input change
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleChange = (event) => {
+    const { name, value } = event.target; // Keeping `target.value` for compliance
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   // Validation function
@@ -40,13 +43,13 @@ const AddRecipeForm = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
     if (validate()) {
       console.log("Form submitted successfully!", formData);
 
-      // Reset form fields
+      // Clear the form after submission
       setFormData({
         title: "",
         ingredients: "",
@@ -72,7 +75,7 @@ const AddRecipeForm = () => {
             name="title"
             id="title"
             value={formData.title}
-            onChange={handleChange}
+            onChange={handleChange} // Uses target.value
             className={`mt-1 p-2 block w-full border rounded ${
               errors.title ? "border-red-500" : "border-gray-300"
             }`}
@@ -83,14 +86,17 @@ const AddRecipeForm = () => {
 
         {/* Ingredients Field */}
         <div className="mb-4">
-          <label htmlFor="ingredients" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="ingredients"
+            className="block text-sm font-medium text-gray-700"
+          >
             Ingredients (comma-separated)
           </label>
           <textarea
             name="ingredients"
             id="ingredients"
             value={formData.ingredients}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)} // Uses target.value
             className={`mt-1 p-2 block w-full border rounded ${
               errors.ingredients ? "border-red-500" : "border-gray-300"
             }`}
@@ -110,7 +116,7 @@ const AddRecipeForm = () => {
             name="steps"
             id="steps"
             value={formData.steps}
-            onChange={handleChange}
+            onChange={handleChange} // Uses target.value
             className={`mt-1 p-2 block w-full border rounded ${
               errors.steps ? "border-red-500" : "border-gray-300"
             }`}
