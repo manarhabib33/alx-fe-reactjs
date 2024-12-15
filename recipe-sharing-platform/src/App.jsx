@@ -1,12 +1,17 @@
 import React from "react";
-import HomePage from "./components/HomePage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./components/HomePage"; // Update the path based on your file structure
+import RecipeDetail from "./components/RecipeDetail"; // Create this component
 
-const App = () => {
+function App() {
   return (
-    <div>
-      <HomePage />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/recipe/:id" element={<RecipeDetail />} />
+      </Routes>
+    </Router>
   );
-};
+}
 
 export default App;
