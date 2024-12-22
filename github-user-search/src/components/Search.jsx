@@ -28,8 +28,8 @@ const Search = ({ onSearch, userData, loading, error }) => {
 
       {loading && <p>Loading...</p>}
 
-      {/* Add the error message directly here */}
-      {error && <p>Looks like we can't find the user</p>} 
+      {/* Ensure the exact message for when the user is not found */}
+      {error && <p>Looks like we cant find the user</p>}  {/* This is the required error message */}
 
       {userData && (
         <div>
