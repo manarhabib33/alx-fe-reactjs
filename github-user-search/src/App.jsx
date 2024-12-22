@@ -24,18 +24,12 @@ const App = () => {
   return (
     <div>
       <h1>GitHub User Search</h1>
-      <Search onSearch={handleSearch} />
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
-      {userData && (
-        <div>
-          <img src={userData.avatar_url} alt={userData.login} width="100" />
-          <h2>{userData.name}</h2>
-          <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
-            Visit Profile
-          </a>
-        </div>
-      )}
+      <Search 
+        onSearch={handleSearch} 
+        userData={userData} 
+        loading={loading} 
+        error={error} 
+      />
     </div>
   );
 };

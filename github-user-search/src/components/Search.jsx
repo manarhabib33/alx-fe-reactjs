@@ -1,10 +1,8 @@
 // components/Search.jsx
 import React, { useState } from 'react';
 
-const Search = ({ onSearch }) => {
+const Search = ({ onSearch, userData, loading, error }) => {
   const [username, setUsername] = useState(''); // to store the search input
-  const [loading, setLoading] = useState(false); // to track loading state
-  const [error, setError] = useState(null); // to store error messages
 
   const handleInputChange = (e) => {
     setUsername(e.target.value);
@@ -13,7 +11,6 @@ const Search = ({ onSearch }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username.trim()) {
-      setLoading(true);
       onSearch(username); // Trigger the API call passed from parent
     }
   };
@@ -29,8 +26,20 @@ const Search = ({ onSearch }) => {
         />
         <button type="submit">Search</button>
       </form>
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
+
+      {loading && <p>Loading...</p>}  {/* Display Loading message */}
+      {error && <p>{error}</p>}  {/* Display error message */}
+      
+      {userData && (
+        <div>
+          {/* Display User Data */}
+          <img src={userData.avatar_url} alt={userData.login} width="100" />
+          <h2>{userData.name}</h2>
+          <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
+            Visit Profile
+          </a>
+        </div>
+      )}
     </div>
   );
 };
