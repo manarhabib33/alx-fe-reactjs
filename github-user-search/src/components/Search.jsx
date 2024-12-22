@@ -1,11 +1,10 @@
-// components/Search.jsx
 import React, { useState } from 'react';
 
 const Search = ({ onSearch, userData, loading, error }) => {
-  const [username, setUsername] = useState(''); // to store the search input
+  const [username, setUsername] = useState(''); // Store the search input
 
   const handleInputChange = (e) => {
-    setUsername(e.target.value);
+    setUsername(e.target.value); // Update state with the search input
   };
 
   const handleSubmit = (e) => {
@@ -27,9 +26,10 @@ const Search = ({ onSearch, userData, loading, error }) => {
         <button type="submit">Search</button>
       </form>
 
-      {loading && <p>Loading...</p>}  {/* Display Loading message */}
-      {error && <p>{error}</p>}  {/* Display error message */}
+      {loading && <p>Loading...</p>} {/* Display loading message */}
       
+      {error && <p>{error}</p>} {/* Display error message */}
+
       {userData && (
         <div>
           {/* Display User Data */}

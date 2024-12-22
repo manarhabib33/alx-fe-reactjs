@@ -1,21 +1,20 @@
-// App.jsx
 import React, { useState } from 'react';
 import Search from './components/Search';
 import { fetchUserData } from './services/githubService';
 
 const App = () => {
-  const [userData, setUserData] = useState(null); // stores the fetched user data
-  const [loading, setLoading] = useState(false); // tracks loading state
-  const [error, setError] = useState(null); // stores error messages
+  const [userData, setUserData] = useState(null); // Store user data
+  const [loading, setLoading] = useState(false); // Track loading state
+  const [error, setError] = useState(''); // Track error state
 
   const handleSearch = async (username) => {
     setLoading(true);
-    setError(null); // Reset error state before making the new API call
+    setError(''); // Reset any previous error
     try {
-      const data = await fetchUserData(username);
-      setUserData(data); // Update state with fetched data
+      const data = await fetchUserData(username); // API call to fetch user data
+      setUserData(data); // Update state with user data
     } catch (err) {
-      setError('Looks like we can’t find the user'); // Set the error message
+      setError('Looks like we can’t find the user'); // Error message if user not found
     } finally {
       setLoading(false);
     }
@@ -28,7 +27,7 @@ const App = () => {
         onSearch={handleSearch} 
         userData={userData} 
         loading={loading} 
-        error={error} 
+        error={error} // Pass the error state to the Search component
       />
     </div>
   );
