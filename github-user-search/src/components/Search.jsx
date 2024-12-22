@@ -52,6 +52,7 @@ const Search = () => {
               className="w-24 h-24 rounded-full mb-4"
             />
             <h2 className="text-lg font-bold">{userData.name}</h2>
+            <p className="text-sm text-gray-600">@{userData.login}</p>
             <a
               href={userData.html_url}
               target="_blank"
