@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { fetchUserData } from '../services/githubService'; // Import the fetchUserData function
 
 const Search = ({ onSearch, userData, loading, error }) => {
   const [username, setUsername] = useState('');
@@ -10,7 +11,10 @@ const Search = ({ onSearch, userData, loading, error }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username.trim()) {
-      onSearch(username);
+      // Call the fetchUserData function here
+      fetchUserData(username) // Fetch data using the username
+        .then((data) => onSearch(data)) // Handle the response and pass it to onSearch
+        .catch(() => onSearch(null, true)); // In case of error, pass error state
     }
   };
 
@@ -28,8 +32,7 @@ const Search = ({ onSearch, userData, loading, error }) => {
 
       {loading && <p>Loading...</p>}
 
-      {/* Ensure the exact message for when the user is not found */}
-      {error && <p>Looks like we cant find the user</p>}  {/* This is the required error message */}
+      {error && <p>Looks like we cant find the user</p>}
 
       {userData && (
         <div>
