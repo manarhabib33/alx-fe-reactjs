@@ -10,12 +10,12 @@ const App = () => {
 
   const handleSearch = async (username) => {
     setLoading(true);
-    setError(null);
+    setError(null); // Reset error state before making the new API call
     try {
       const data = await fetchUserData(username);
       setUserData(data); // Update state with fetched data
     } catch (err) {
-      setError('Looks like we can’t find the user');
+      setError('Looks like we can’t find the user'); // Set the error message
     } finally {
       setLoading(false);
     }
