@@ -33,6 +33,7 @@ const Search = ({ onSearch, userData, loading, error }) => {
   return (
     <div>
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Username Input */}
         <div>
           <input
             type="text"
@@ -44,6 +45,7 @@ const Search = ({ onSearch, userData, loading, error }) => {
           />
         </div>
 
+        {/* Location Input */}
         <div>
           <input
             type="text"
@@ -55,6 +57,7 @@ const Search = ({ onSearch, userData, loading, error }) => {
           />
         </div>
 
+        {/* Min Repositories Input */}
         <div>
           <input
             type="number"
@@ -71,10 +74,12 @@ const Search = ({ onSearch, userData, loading, error }) => {
         </button>
       </form>
 
+      {/* Loading and Error Handling */}
       {loading && <p>Loading...</p>}
 
       {error && <p>Looks like we cant find the user</p>}
 
+      {/* Display User Data */}
       {userData && (
         <div className="space-y-4">
           {userData.items?.map((user) => (
