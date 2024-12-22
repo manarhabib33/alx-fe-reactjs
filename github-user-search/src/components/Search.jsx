@@ -1,51 +1,63 @@
-import React, { useState } from 'react';
-import fetchUserData from '../services/githubService';
+import React, { useState } from "react";
+import { fetchUserData } from "../services/githubService";
 
 const Search = () => {
-  const [username, setUsername] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
 
-  const handleSearch = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    setUserData(null);
+    setError(false);
 
     try {
-      const data = await fetchUserData(username);
+      const data = await fetchUserData(searchTerm);
       setUserData(data);
     } catch (err) {
-      setError("Looks like we can't find the user.");
+      setError(true);
+      setUserData(null);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <form onSubmit={handleSearch} className="flex flex-col gap-4">
+    <div className="p-4">
+      <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <input
           type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Enter GitHub username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="border rounded p-2"
+          className="p-2 border rounded mb-4 w-full max-w-md"
         />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
           Search
         </button>
       </form>
 
-      <div className="mt-4">
+      <div className="mt-6">
         {loading && <p>Loading...</p>}
-        {error && <p className="text-red-500">{error}</p>}
+        {error && <p>Looks like we can't find the user</p>}
         {userData && (
-          <div className="flex flex-col items-center border p-4 rounded shadow">
-            <img src={userData.avatar_url} alt={userData.login} className="w-24 h-24 rounded-full mb-4" />
-            <h2 className="text-xl font-bold">{userData.name || userData.login}</h2>
-            <a href={userData.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+          <div className="flex flex-col items-center">
+            <img
+              src={userData.avatar_url}
+              alt={userData.name}
+              className="w-24 h-24 rounded-full mb-4"
+            />
+            <h2 className="text-lg font-bold">{userData.name}</h2>
+            <a
+              href={userData.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 underline mt-2"
+            >
               View Profile
             </a>
           </div>
