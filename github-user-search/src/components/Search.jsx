@@ -1,104 +1,81 @@
-import React, { useState } from 'react';
-import { fetchUserData } from '../services/githubService';
+// src/components/Search.jsx
 
-const Search = ({ onSearch, userData, loading, error }) => {
+import React, { useState } from 'react';
+import { fetchUserData } from '../services/githubService'; // Adjust the import path if necessary
+
+const Search = () => {
   const [username, setUsername] = useState('');
   const [location, setLocation] = useState('');
   const [minRepos, setMinRepos] = useState('');
-  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [userData, setUserData] = useState(null);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    if (name === 'username') setUsername(value);
-    if (name === 'location') setLocation(value);
-    if (name === 'minRepos') setMinRepos(value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (username.trim() || location.trim() || minRepos.trim()) {
-      fetchUserData(username, location, minRepos, page)
-        .then((data) => onSearch(data))
-        .catch(() => onSearch(null, true)); // Handle error state
+  // Async function to handle search
+  const handleSearch = async () => {
+    setLoading(true);
+    setError('');
+    setUserData(null);
+    try {
+      const data = await fetchUserData(username, location, minRepos);
+      if (data) {
+        setUserData(data.items); // Assuming the data has an "items" array
+      } else {
+        setError('Looks like we can\'t find the user');
+      }
+    } catch (err) {
+      setError('Something went wrong. Please try again later.');
     }
-  };
-
-  const handleLoadMore = () => {
-    setPage(page + 1);
-    fetchUserData(username, location, minRepos, page + 1)
-      .then((data) => onSearch(data, false))
-      .catch(() => onSearch(null, true)); // Handle error state
+    setLoading(false);
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Username Input */}
-        <div>
-          <input
-            type="text"
-            name="username"
-            value={username}
-            onChange={handleInputChange}
-            placeholder="Enter GitHub username"
-            className="p-2 w-full border border-gray-300 rounded"
-          />
-        </div>
-
-        {/* Location Input */}
-        <div>
-          <input
-            type="text"
-            name="location"
-            value={location}
-            onChange={handleInputChange}
-            placeholder="Location"
-            className="p-2 w-full border border-gray-300 rounded"
-          />
-        </div>
-
-        {/* Min Repositories Input */}
-        <div>
-          <input
-            type="number"
-            name="minRepos"
-            value={minRepos}
-            onChange={handleInputChange}
-            placeholder="Min Repositories"
-            className="p-2 w-full border border-gray-300 rounded"
-          />
-        </div>
-
-        <button type="submit" className="p-2 bg-blue-500 text-white rounded w-full">
+      <div className="flex flex-col gap-4">
+        <input
+          type="text"
+          placeholder="GitHub Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="p-2 border border-gray-300"
+        />
+        <input
+          type="text"
+          placeholder="Location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          className="p-2 border border-gray-300"
+        />
+        <input
+          type="number"
+          placeholder="Minimum Repos"
+          value={minRepos}
+          onChange={(e) => setMinRepos(e.target.value)}
+          className="p-2 border border-gray-300"
+        />
+        <button
+          onClick={handleSearch}
+          className="bg-blue-500 text-white p-2 rounded"
+        >
           Search
         </button>
-      </form>
+      </div>
 
-      {/* Loading and Error Handling */}
       {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
 
-      {error && <p>Looks like we cant find the user</p>}
-
-      {/* Display User Data */}
       {userData && (
-        <div className="space-y-4">
-          {userData.items?.map((user) => (
-            <div key={user.id} className="border border-gray-200 p-4 rounded">
-              <img src={user.avatar_url} alt={user.login} width="100" className="rounded" />
-              <h2>{user.login}</h2>
-              <p>Location: {user.location || 'Not provided'}</p>
-              <p>Repositories: {user.public_repos}</p>
-              <a href={user.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
-                Visit Profile
+        <div>
+          {userData.map((user) => (
+            <div key={user.login} className="p-4 border-b border-gray-300">
+              <img src={user.avatar_url} alt={user.login} className="w-16 h-16 rounded-full" />
+              <p>{user.login}</p>
+              <p>{user.location}</p>
+              <a href={`https://github.com/${user.login}`} target="_blank" rel="noopener noreferrer">
+                View Profile
               </a>
             </div>
           ))}
-          <button
-            onClick={handleLoadMore}
-            className="bg-blue-500 text-white p-2 rounded"
-          >
-            Load More
-          </button>
         </div>
       )}
     </div>

@@ -1,20 +1,17 @@
+// src/services/githubService.js
+
 import axios from 'axios';
 
-export const fetchUserData = async (username = '', location = '', minRepos = '', page = 1) => {
+// Use async/await for the fetchUserData function
+export const fetchUserData = async (username, location, minRepos) => {
   try {
-    let query = `${username ? `user:${username}` : ''}`;
+    const query = `user:${username}${location ? ` location:${location}` : ''}${minRepos ? ` repos:${minRepos}..` : ''}`;
+    
+    const response = await axios.get(`https://api.github.com/search/users?q=${query}`);
 
-    // Include location and minimum repositories if provided
-    if (location) query += `+location:${location}`;
-    if (minRepos) query += `+repos:>${minRepos}`;
-
-    // Construct the GitHub API request with dynamic query
-    const response = await axios.get(
-      `https://api.github.com/search/users?q=${query}&page=${page}&per_page=10`
-    );
-
-    return response.data;
+    return response.data; // Returning the data directly
   } catch (error) {
-    throw new Error('User not found');
+    console.error(error);
+    return null;
   }
 };
