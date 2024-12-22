@@ -1,12 +1,13 @@
+// services/githubService.js
 import axios from 'axios';
 
-const GITHUB_API_URL = 'https://api.github.com/users';
-
 const fetchUserData = async (username) => {
-  if (!username) throw new Error('Username is required');
-
-  const response = await axios.get(`${GITHUB_API_URL}/${username}`);
-  return response.data;
+  try {
+    const response = await axios.get(`https://api.github.com/users/${username}`);
+    return response.data; // returns user data
+  } catch (error) {
+    throw error; // Throws an error in case of failed API request
+  }
 };
 
-export default fetchUserData;
+export { fetchUserData };
