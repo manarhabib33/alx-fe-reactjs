@@ -71,7 +71,7 @@ const Search = () => {
               <img src={user.avatar_url} alt={user.login} className="w-16 h-16 rounded-full" />
               <p>{user.login}</p>
               <p>{user.location}</p>
-              <a href={`https://github.com/${user.login}`} target="_blank" rel="noopener noreferrer">
+              <a href={user.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
                 View Profile
               </a>
             </div>
